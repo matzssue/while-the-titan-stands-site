@@ -1,0 +1,66 @@
+---
+import { decisions } from "../data/content";
+---
+
+<section class="section" id="built">
+  <div class="wrap">
+    <h2 class="title"><span>How it's built</span></h2>
+    <p class="intro">
+      The game has to run with thousands of enemies on screen, and adding content has to stay cheap. These four
+      decisions do most of that work, and each one comes with a rule the code is checked against.
+    </p>
+
+    <div class="grid">
+      {
+        decisions.map((d) => (
+          <article class="panel card">
+            <p class="smallcaps">{d.kicker}</p>
+            <h3>{d.title}</h3>
+            <p class="body">{d.body}</p>
+            <p class="proof">{d.proof}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .card {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: clamp(22px, 3vw, 32px);
+  }
+
+  .card p {
+    margin: 0;
+  }
+
+  h3 {
+    font-size: clamp(26px, 2.6vw, 30px);
+  }
+
+  .body {
+    color: var(--bone-dim);
+  }
+
+  .proof {
+    margin-top: 6px !important;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    font-size: 15px;
+  }
+
+  @media (max-width: 760px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

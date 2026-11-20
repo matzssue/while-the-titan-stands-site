@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Gameplay from "../components/Gameplay.astro";
+import Stats from "../components/Stats.astro";
+import Decisions from "../components/Decisions.astro";
+import Performance from "../components/Performance.astro";
+import Pipeline from "../components/Pipeline.astro";
+import WorkingWithAI from "../components/WorkingWithAI.astro";
+import Footer from "../components/Footer.astro";
+import BackToTop from "../components/BackToTop.astro";
+import { site } from "../data/content";
+---
+
+<Base title={`${site.title} · how it's built`} description={site.tagline}>
+  <Hero />
+  <main>
+    <Gameplay />
+    <Stats />
+    <Decisions />
+    <Performance />
+    <Pipeline />
+    <WorkingWithAI />
+  </main>
+  <Footer />
+  <BackToTop />
+</Base>

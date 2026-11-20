@@ -1,0 +1,185 @@
+/* Follows the game's 2026-11 UI motif without using its textures:
+   header face TitanHeaderSC, body SN Pro, cold stone, thin dull-gold edges,
+   1 px rules #48443C, gold only for selection, red only for danger. */
+
+@font-face {
+  font-family: "Titan Header";
+  src: url("../assets/fonts/TitanHeaderSC.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SN Pro";
+  src: url("../assets/fonts/SNPro-Medium.woff") format("woff");
+  font-weight: 400 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SN Pro";
+  src: url("../assets/fonts/SNPro-Bold.woff") format("woff");
+  font-weight: 600 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --ground: #141413;
+  --stone: #1f1f1e;
+  --stone-2: #2a2a28;
+  --fill: #5c5649;
+  --rule: #48443c;
+  --edge: #6e5d3c;
+  --gold: #d6b36a;
+  --bone: #e6e0d2;
+  --bone-dim: #a39d90;
+  --steel: #7f909f;
+  --red: #a3322f;
+
+  --display: "Titan Header", Georgia, serif;
+  --text: "SN Pro", system-ui, sans-serif;
+
+  --gutter: clamp(16px, 4vw, 40px);
+  --max: 1080px;
+
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--grain), var(--ground);
+  color: var(--bone);
+  font: 500 17px/1.6 var(--text);
+  overflow-x: hidden;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--bone);
+  text-decoration-color: var(--edge);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-color: var(--gold);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: min(var(--max), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(56px, 9vw, 100px);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+/* Section title centred between thin rules, with a small diamond on each rule. */
+.title {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(14px, 3vw, 26px);
+  margin: 0 0 clamp(22px, 4vw, 36px);
+  font-size: clamp(30px, 4.4vw, 44px);
+  text-align: center;
+}
+
+.title::before,
+.title::after {
+  content: "";
+  height: 7px;
+  background:
+    linear-gradient(45deg, transparent 45%, var(--edge) 45% 55%, transparent 55%) right center / 7px 7px no-repeat,
+    linear-gradient(var(--rule), var(--rule)) left center / calc(100% - 12px) 1px no-repeat;
+}
+
+.title::after {
+  transform: scaleX(-1);
+}
+
+.intro {
+  max-width: 62ch;
+  margin: 0 auto clamp(30px, 5vw, 48px);
+  text-align: center;
+  color: var(--bone-dim);
+}
+
+/* The game's 2026-11 card plate (expedition screen): stone with a thin ornamented frame, 9-sliced. */
+.panel {
+  border: 16px solid transparent;
+  border-image: url("../assets/game/plate.webp") 16 fill / 16px stretch;
+  box-shadow: 0 12px 28px #000a;
+}
+
+/* Button in the shape of the motif's P1: hover lights the rim, no colour fill. */
+.plate {
+  display: inline-grid;
+  place-items: center;
+  min-height: 52px;
+  padding: 0 28px;
+  background: var(--grain), linear-gradient(180deg, #252522, #1a1a18);
+  border: 1px solid #9a7f48;
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 1px #000c,
+    0 6px 16px #0009;
+  font: 700 16px/1 var(--text);
+  letter-spacing: 0.03em;
+  color: var(--bone);
+  text-decoration: none;
+  transition:
+    box-shadow 0.15s,
+    border-color 0.15s;
+}
+
+.plate:hover {
+  border-color: var(--gold);
+  box-shadow:
+    inset 0 0 0 1px #000c,
+    inset 0 0 14px #c2a46733,
+    0 6px 16px #0009;
+}
+
+.smallcaps {
+  font: 700 13px/1.3 var(--text);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

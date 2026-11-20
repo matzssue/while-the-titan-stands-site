@@ -1,0 +1,126 @@
+---
+import { Image } from "astro:assets";
+import { site, heroVideo } from "../data/content";
+import combat from "../assets/shots/combat.jpg";
+import equipment from "../assets/shots/equipment.jpg";
+import expedition from "../assets/shots/expedition.jpg";
+import boss from "../assets/shots/boss.jpg";
+
+// Files in public/ live under the site base (GitHub Pages project path).
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const videoSrc = heroVideo.src ? base + heroVideo.src : null;
+const av1Src = heroVideo.av1 ? base + heroVideo.av1 : null;
+const posterSrc = heroVideo.poster ? base + heroVideo.poster : undefined;
+
+// Screenshots from the current build (English). The combat frame is from the author's horde capture.
+const shots = [
+  { src: combat, alt: "The Knight's Blizzard whirlwinds cutting through a packed horde outside the camp palisade", caption: "Horde wave on the Floodplain" },
+  { src: boss, alt: "A giant river boss leaning over the bridge at night to hurl a boat wreck", caption: "Boss on The Crossing" },
+  { src: equipment, alt: "Equipment screen: stats column, the Knight's paper doll and the stash grid", caption: "Equipment and stash" },
+  { src: expedition, alt: "Expedition map of the Borderlands with the Guardian's Floodplain selected", caption: "Expedition map" },
+];
+---
+
+<section class="section gameplay" id="gameplay">
+  <div class="wrap">
+    <div class="panel screen">
+      {
+        videoSrc ? (
+          <video autoplay muted loop playsinline preload="metadata" poster={posterSrc}>
+            {av1Src && <source src={av1Src} type='video/webm; codecs="av01.0.08M.08"' />}
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        ) : (
+          <div class="empty">
+            <span class="smallcaps">Gameplay video</span>
+            <span class="muted">recorded from the current build</span>
+          </div>
+        )
+      }
+    </div>
+    <p class="summary">{site.summary}</p>
+    <ul class="shots">
+      {
+        shots.map((shot) => (
+          <li>
+            <figure>
+              <a class="panel" href={shot.src.src} target="_blank" rel="noopener">
+                <Image src={shot.src} alt={shot.alt} widths={[640, 1280]} sizes="(max-width: 760px) 100vw, 540px" />
+              </a>
+              <figcaption class="smallcaps">{shot.caption}</figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .gameplay {
+    padding-top: clamp(24px, 4vw, 48px);
+  }
+
+  .screen {
+    aspect-ratio: 16 / 9;
+    padding: 10px;
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .empty {
+    height: 100%;
+    display: grid;
+    place-content: center;
+    gap: 6px;
+    text-align: center;
+    background: #0e0e0d;
+    box-shadow: inset 0 0 40px #000;
+  }
+
+  .shots {
+    list-style: none;
+    margin: clamp(32px, 6vw, 56px) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(14px, 2.4vw, 24px);
+  }
+
+  .shots figure {
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+
+  .shots a {
+    display: block;
+    padding: 6px;
+  }
+
+  .shots img {
+    width: 100%;
+    height: auto;
+  }
+
+  .shots figcaption {
+    text-align: center;
+  }
+
+  @media (max-width: 760px) {
+    .shots {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .summary {
+    max-width: 64ch;
+    margin: clamp(24px, 4vw, 36px) auto 0;
+    text-align: center;
+    color: var(--bone-dim);
+  }
+</style>

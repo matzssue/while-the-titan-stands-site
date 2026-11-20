@@ -1,0 +1,54 @@
+---
+import { site } from "../data/content";
+---
+
+<footer>
+  <div class="wrap inner">
+    <p class="name">{site.title}</p>
+    <p class="note">
+      The game's repository is private while the game is in development, so this page describes the project and how
+      it's made without showing the source.
+    </p>
+    <p class="links">
+      <a href={site.linkedin} rel="noopener">LinkedIn</a>
+      <span aria-hidden="true">·</span>
+      <a href={site.github} rel="noopener">GitHub</a>
+      <span aria-hidden="true">·</span>
+      <a href={site.toolRepo} rel="noopener">ai-motion-to-sprites</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-block: 40px 52px;
+    text-align: center;
+  }
+
+  .inner {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .name {
+    font: 400 26px/1.1 var(--display);
+  }
+
+  .note {
+    max-width: 58ch;
+    font-size: 14px;
+    color: var(--bone-dim);
+  }
+
+  .links {
+    display: flex;
+    gap: 10px;
+    color: var(--bone-dim);
+  }
+</style>

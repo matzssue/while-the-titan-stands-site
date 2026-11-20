@@ -1,0 +1,63 @@
+---
+// Plain anchor, no client JS. Where the browser supports scroll-driven animations it fades in
+// after the hero; elsewhere it simply stays visible.
+---
+
+<a class="to-top" href="#top" aria-label="Back to top">
+  <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true">
+    <path d="M4 12.5 10 6.5l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" />
+  </svg>
+</a>
+
+<style>
+  .to-top {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    color: var(--bone);
+    background: var(--grain), linear-gradient(180deg, #252522, #1a1a18);
+    border: 1px solid #9a7f48;
+    border-radius: 6px;
+    box-shadow:
+      inset 0 0 0 1px #000c,
+      0 6px 16px #0009;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s,
+      color 0.15s;
+  }
+
+  .to-top:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    box-shadow:
+      inset 0 0 0 1px #000c,
+      inset 0 0 14px #c2a46733,
+      0 6px 16px #0009;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .to-top {
+      animation: to-top-in linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+
+    @keyframes to-top-in {
+      0%,
+      70% {
+        opacity: 0;
+        visibility: hidden;
+      }
+      100% {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import { pipeline, site } from "../data/content";
+---
+
+<section class="section" id="pipeline">
+  <div class="wrap">
+    <h2 class="title"><span>Art pipeline</span></h2>
+    <p class="intro">
+      The game needs hundreds of enemy animations, so I turned the motion step into a separate open-source tool. Most
+      of the work went into catching bad takes early, so the tool stops three times and waits for a person to check
+      the result.
+    </p>
+
+    <ol class="steps">
+      {
+        pipeline.map((s, i) => (
+          <li>
+            <span class="n">{i + 1}</span>
+            <div>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
+            {s.gate ? <span class="gate">Review: {s.gate.replace("review ", "")}</span> : <span />}
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="repo">
+      Code, docs and benchmarks:
+      <a href={site.toolRepo} rel="noopener">github.com/matzssue/ai-motion-to-sprites</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .steps {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 820px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .steps li {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 18px;
+    align-items: baseline;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .n {
+    font: 700 15px/1 var(--text);
+    color: var(--bone-dim);
+    text-align: right;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  .steps p {
+    margin: 4px 0 0;
+    color: var(--bone-dim);
+  }
+
+  .gate {
+    padding: 3px 10px;
+    border: 1px solid var(--edge);
+    font: 700 12px/1.4 var(--text);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .repo {
+    margin: 28px 0 0;
+    text-align: center;
+    color: var(--bone-dim);
+  }
+
+  @media (max-width: 640px) {
+    .steps li {
+      grid-template-columns: 28px minmax(0, 1fr);
+    }
+    .gate {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+</style>
